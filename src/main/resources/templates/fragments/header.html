@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+    <header th:fragment="header">
+        <div id="header-wrapper">
+            <h1><a th:href="@{/home}">時間割アプリ</a></h1>
+            <nav>
+                <div><a th:href="@{/home}" th:text="${session.loginStudent.name} + 'さん'"></a></div>
+                <div><a th:href="@{/logout}">ログアウト</a></div>
+            </nav>
+        </div>
+    </header>
+</body>
+
+</html>

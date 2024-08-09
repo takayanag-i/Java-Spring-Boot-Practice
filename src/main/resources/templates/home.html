@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>時間割アプリ</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/enrollment.css">
+</head>
+
+<body>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <h2>履修登録</h2>
+        <p>履修登録を<a th:href="@{/search}">授業検索・登録</a>から行ってください。</p>
+        <p>以下の「履修登録状況」から，コマごとに登録・削除を行うこともできます。</p>
+        <h2>履修登録状況</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="empty"></th>
+                    <th>月</th>
+                    <th>火</th>
+                    <th>水</th>
+                    <th>木</th>
+                    <th>金</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="period : ${#numbers.sequence(1, 5)}">
+                    <td th:text="${period}"></td>
+                    <td th:each="day : ${#numbers.sequence(1, 5)}" th:with="course=${matrix[period - 1][day - 1]}"
+                        th:rowspan="${course.rowspan}">
+                        <form th:action="@{${course.formAction}}" method="post">
+                            <input type="hidden" name="course_id" th:value="${course.courseId}">
+                            <input type="hidden" name="day_of_week" th:value="${course.dayOfWeek.num}">
+                            <input type="hidden" name="period" th:value="${course.period}">
+                            <input type="hidden" name="course_name" value="">
+                            <input type="hidden" name="instructor_name" value="">
+                        </form>
+                        <div th:if="${course.courseId}">
+                            <div class="course-name" th:text="${course.courseName}"></div>
+                            <div th:each="instructor : ${course.instructors}" class="instructor-name"
+                                th:text="${instructor}"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <script>
+        document.querySelectorAll('td').forEach(function (td) {
+            if (td.textContent.trim() === '') {
+                td.classList.add('empty');
+            }
+            td.addEventListener('click', function () {
+                this.querySelector('form').submit();
+            });
+        });
+    </script>
+</body>
+
+</html>

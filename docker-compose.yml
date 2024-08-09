@@ -1,0 +1,12 @@
+services:
+  mysql:
+    container_name: "mysql-container"
+    hostname: "mysql-demo"
+    build:
+      context: .
+      dockerfile: ./mysql/Dockerfile
+    volumes:
+      - ./mysql/conf.d/:/etc/mysql/conf.d/
+      - ./mysql/init.d/:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
