@@ -1,0 +1,116 @@
+p {
+    margin: 0;
+}
+
+/* コンテナ */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.sub-container {
+    max-width: 300px;
+    margin-right: 20px;
+}
+
+.results-sub-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* 検索ウィジェットのコンテナ */
+.form-container {
+    padding: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* 検索窓 */
+.form-container input[type="text"],
+.form-container select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 検索窓　行 */
+.form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ボタン */
+.btn {
+    padding: 10px 15px;
+    background-color: #223a70;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 40px;
+}
+
+.btn:hover {
+    background-color: #1e3270;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+/* 検索結果のコンテナ */
+.results-container {
+    flex-grow: 1;
+}
+
+/* テーブルのコンテナ */
+.table-container {
+    max-width: 1000px;
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 30px;
+}
+
+/* スクロール部分のコンテナ */
+.scrollable-container {
+    max-height: 400px;
+    /* 必要に応じて高さを調整 */
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* テーブル */
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* エラーメッセージ */
+.error-message {
+    width: 100%;
+    color: red;
+    font-weight: bold;
+    background-color: yellow;
+}
