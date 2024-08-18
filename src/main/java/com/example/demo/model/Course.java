@@ -30,7 +30,11 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Enrollment> enrollments;
 
-    /** the list of enrollments associated with this course */
+    /** the list of timetables associated with this course */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Timetable> timeTables;
+
+    /** the list of instructions associated with this course */
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Instruction> instructions;
 }

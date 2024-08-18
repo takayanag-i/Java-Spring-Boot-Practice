@@ -41,8 +41,8 @@
                         </form>
                         <div th:if="${course.courseId}">
                             <div class="course-name" th:text="${course.courseName}"></div>
-                            <div th:each="instructor : ${course.instructors}" class="instructor-name"
-                                th:text="${instructor}"></div>
+                            <div th:each="instructorName : ${course.instructorNames}" class="instructor-name"
+                                th:text="${instructorName}"></div>
                         </div>
                     </td>
                 </tr>

@@ -24,8 +24,7 @@ public class HomeController {
         String studentId = loginStudent.getStudentId();
 
         // 表示用時間割データを取得
-        List<CourseDto> courses = displayService.getCourses(studentId);
-        List<List<CourseDto>> matrix = displayService.getCourseMatrix(courses);
+        List<List<CourseDto>> matrix = displayService.getCourseMatrix(studentId);
 
         model.addAttribute("matrix", matrix);
         return "home"; // ビューは後で作成
@@ -38,8 +37,7 @@ public class HomeController {
         String studentId = loginStudent.getStudentId();
 
         // 表示用時間割データを取得
-        List<CourseDto> courses = displayService.getCourses(studentId);
-        List<List<CourseDto>> matrix = displayService.getCourseMatrix(courses);
+        List<List<CourseDto>> matrix = displayService.getCourseMatrix(studentId);
 
         model.addAttribute("matrix", matrix);
         return "home"; // ビューは後で作成

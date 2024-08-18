@@ -39,7 +39,7 @@ public class MultipleInstructorsLogic {
         d.setPeriod(timeTableEntity.getPeriod());
         d.setCourseId(timeTableEntity.getCourse().getCourseId());
         d.setCourseName(timeTableEntity.getCourse().getCourseName());
-        d.setInstructors(instructors);
+        d.setInstructorNames(instructors);
 
         return d;
     }
