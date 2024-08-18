@@ -5,24 +5,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+/**
+ * Entity class for the `student`.
+ */
 @Data
 @Entity
 public class Student {
 
-    /** 出席番号 */
+    /** student ID */
     @Id
     @Column(name = "student_id", length = 4)
     private String studentId;
 
-    /** 名前 */
+    /** name */
     @Column(name = "name", length = 31)
     private String name;
 
-    /** メールアドレス */
+    /** Email adress */
     @Column(name = "email", length = 63)
     private String email;
 
-    /** パスワード */
+    /** password */
     @Column(name = "password", length = 63)
     private String password;
 }

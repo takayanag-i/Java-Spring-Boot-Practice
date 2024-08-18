@@ -55,7 +55,7 @@ public class MultipleInstructorsLogic {
         Map<String, List<String>> instructionMap = new HashMap<>();
 
         for (Instruction instructionEntity : instructionEntities) {
-            String courseId = instructionEntity.getCourseId();
+            String courseId = instructionEntity.getCourse().getCourseId();
             String instructorName = instructionEntity.getInstructor().getName();
 
             // 新しいコースIdが来たらkeyにして，valueとして新しいArrayListをnewする

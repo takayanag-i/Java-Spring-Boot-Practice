@@ -8,27 +8,26 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
+/**
+ * Entity class for the `timetable`.
+ */
 @Data
 @Entity
 @IdClass(TimetableId.class)
 public class Timetable {
 
-    /** コースID */
-    @Id
-    @Column(name = "course_id", length = 5)
-    private String courseId;
+    /** the course associated with this timetable */
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    /** 曜日 */
+    /** day of week number (single-digit numeric string) */
     @Id
-    @Column(name = "day_of_week", length = 1)
+    @Column(length = 1)
     private String dayOfWeek;
 
-    /** 時限 */
+    /** period */
     @Id
-    @Column(name = "period", length = 1)
+    @Column(length = 1)
     private String period;
-
-    @ManyToOne
-    @JoinColumn(name = "course_id", insertable = false, updatable = false)
-    private Course course;
 }

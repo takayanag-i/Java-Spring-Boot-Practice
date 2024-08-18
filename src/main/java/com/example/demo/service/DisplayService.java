@@ -6,7 +6,7 @@ import com.example.demo.model.Instruction;
 import com.example.demo.model.Timetable;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.InstructionRepository;
-import com.example.demo.repository.TimeTableRepository;
+import com.example.demo.repository.TimetableRepository;
 import com.example.demo.logic.MultipleInstructorsLogic;
 import com.example.demo.util.MatrixUtil;
 import com.example.demo.common.DayOfWeek;
@@ -29,10 +29,9 @@ public class DisplayService {
 
     private final CourseRepository courseRepository;
     private final InstructionRepository instructionRepository;
-    private final TimeTableRepository timeTableRepository;
+    private final TimetableRepository timeTableRepository;
     private final MultipleInstructorsLogic multipleInstructorsLogic;
 
-    @Transactional(readOnly = true)
     public List<List<CourseDto>> getCourseMatrix(List<CourseDto> courses) {
         // 空きコマ用のDTOで初期化されたmatrixを生成
         List<List<CourseDto>> matrix = this.initialiseMatrix();
@@ -99,6 +98,7 @@ public class DisplayService {
         return new ArrayList<>(map.values());
     }
 
+    @Transactional(readOnly = true)
     public List<CourseDto> getCourses(String studentId) {
         List<CourseDto> courseDtos = new ArrayList<>();
 
@@ -106,16 +106,14 @@ public class DisplayService {
             // 講座エンティティの取得
             List<Course> courseEntities =
                     courseRepository.findByEnrollments_StudentId(studentId);
-            List<String> courseIds = courseEntities.stream().map(Course::getCourseId)
-                    .collect(Collectors.toList());
 
             // 時間割エンティティの取得
             List<Timetable> timeTableEntities =
-                    timeTableRepository.findByCourseIdIn(courseIds);
+                    timeTableRepository.findByCourseIn(courseEntities);
 
             // 講座・教員対応エンティティの取得
             List<Instruction> instructionEntities =
-                    instructionRepository.findByCourseIdIn(courseIds);
+                    instructionRepository.findByCourseIn(courseEntities);
 
             // 講座DTOの作成
             for (Timetable timeTableEntity : timeTableEntities) {

@@ -9,30 +9,30 @@ import jakarta.persistence.ManyToOne;
 import java.sql.Timestamp;
 import lombok.Data;
 
+/**
+ * Entity class for the `enrollment`.
+ */
 @Data
 @Entity
 @IdClass(EnrollmentId.class)
 public class Enrollment {
 
-    /** 出席番号 */
+    /** student ID */
     @Id
-    @Column(name = "student_id", length = 4)
+    @Column(length = 4)
     private String studentId;
 
-    /** コースID */
+    /** the course associated with this enrollment */
     @Id
-    @Column(name = "course_id", length = 5)
-    private String courseId;
-
-    /** 登録日 */
-    @Column(name = "enrollment_date")
-    private Timestamp enrollmentDate;
-
-    /** キャンセルフラグ */
-    @Column(name = "cancel_flag")
-    private boolean cancelFlag;
-
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    /** enrollment date */
+    @Column
+    private Timestamp enrollmentDate;
+
+    /** if the enrollment is canceled */
+    @Column
+    private boolean cancelFlag = false;
 }

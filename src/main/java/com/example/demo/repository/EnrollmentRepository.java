@@ -5,5 +5,5 @@ import com.example.demo.model.Enrollment;
 import com.example.demo.model.EnrollmentId;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, EnrollmentId> {
-    void deleteByStudentIdAndCourseId(String studentId, String courseId);
+    void deleteByStudentIdAndCourse_CourseId(String studentId, String courseId);
 }

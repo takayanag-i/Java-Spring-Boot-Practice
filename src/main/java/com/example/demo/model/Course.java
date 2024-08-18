@@ -7,24 +7,30 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
+/**
+ * Entity class for the `course`.
+ */
 @Data
 @Entity
+@Accessors(chain = true)
 public class Course {
 
-    /** コースID */
+    /** course ID */
     @Id
-    @Column(name = "course_id", length = 5)
+    @Column(length = 5)
     private String courseId;
 
-    /** コース名 */
-    @Column(name = "course_name", length = 63)
+    /** course name */
+    @Column(length = 63)
     private String courseName;
 
-
-    @OneToMany(mappedBy = "course")
+    /** The list of enrollments associated with this course */
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Enrollment> enrollments;
 
+    /** the list of enrollments associated with this course */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Timetable> timeTables;
 }

@@ -3,8 +3,15 @@ package com.example.demo.model;
 import java.io.Serializable;
 import lombok.Data;
 
+/**
+ * ID class for the `enrollment`.
+ */
 @Data
 public class EnrollmentId implements Serializable {
+
+    /** student ID */
     private String studentId;
-    private String courseId;
+
+    /** course */
+    private Course course;
 }

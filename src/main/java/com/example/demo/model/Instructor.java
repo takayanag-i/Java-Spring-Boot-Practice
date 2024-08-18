@@ -8,27 +8,31 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
+/**
+ * Entity class for the `instructor`.
+ */
 @Data
 @Entity
 public class Instructor {
 
-    /** 教員ID */
+    /** instructor ID */
     @Id
     @Column(name = "instructor_id", length = 5)
     private String instructorId;
 
-    /** 名前 */
+    /** name */
     @Column(name = "name", length = 31)
     private String name;
 
-    /** メールアドレス */
+    /** Email adress */
     @Column(name = "email", length = 63)
     private String email;
 
-    /** パスワード */
+    /** password */
     @Column(name = "password", length = 63)
     private String password;
 
+    /** the list of instructions associated with this instructor */
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
     private List<Instruction> instructions;
 }

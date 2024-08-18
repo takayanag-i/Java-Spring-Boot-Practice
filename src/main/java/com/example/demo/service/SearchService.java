@@ -2,10 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CourseDto;
 import com.example.demo.dto.SearchCriteriaDto;
+import com.example.demo.model.Course;
 import com.example.demo.model.Instruction;
 import com.example.demo.model.Timetable;
 import com.example.demo.repository.InstructionRepository;
-import com.example.demo.repository.TimeTableRepository;
+import com.example.demo.repository.TimetableRepository;
 import com.example.demo.logic.MultipleInstructorsLogic;
 import com.example.demo.constants.ErrorMessages;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SearchService {
 
-    private final TimeTableRepository timeTableRepository;
+    private final TimetableRepository timeTableRepository;
     private final InstructionRepository instructionRepository;
     private final MultipleInstructorsLogic multipleInstructorsLogic;
 
@@ -37,15 +38,15 @@ public class SearchService {
                     "%" + criteriaDto.getDayOfWeek().getNum() + "%",
                     "%" + criteriaDto.getPeriod() + "%");
 
-            // 講座IDリストの作成
-            List<String> courseIds = timeTableEntities.stream()
-                    .map(timeTableEntity -> timeTableEntity.getCourse().getCourseId())
+            // 講座リストの作成
+            List<Course> courses = timeTableEntities.stream()
+                    .map(timeTableEntity -> timeTableEntity.getCourse())
                     .distinct()
                     .collect(Collectors.toList());
 
             // 講座・教員対応エンティティの取得
             List<Instruction> instructionEntities =
-                    instructionRepository.findByCourseIdIn(courseIds);
+                    instructionRepository.findByCourseIn(courses);
 
             // 講座DTOの作成
             for (Timetable timeTableEntity : timeTableEntities) {

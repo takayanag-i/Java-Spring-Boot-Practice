@@ -24,8 +24,6 @@ public class EnrollmentService {
 
     @Transactional
     public void enroll(EnrollmentDto dto) throws InvalidEnrollmentException {
-        Enrollment entity = convert(dto);
-
         // 重複チェック
         Course targetCourse = courseRepository.findById(dto.getCourseId()).orElse(null);
         if (targetCourse == null) {
@@ -38,6 +36,8 @@ public class EnrollmentService {
             throw new InvalidEnrollmentException(ErrorMessages.DUPLICATE_ENROLLMENT);
         }
 
+        Enrollment entity = convert(dto, targetCourse);
+
         // インサート
         try {
             enrollmentRepository.save(entity);
@@ -46,10 +46,10 @@ public class EnrollmentService {
         }
     }
 
-    private Enrollment convert(EnrollmentDto dto) {
+    private Enrollment convert(EnrollmentDto dto, Course course) {
         Enrollment entity = new Enrollment();
         entity.setStudentId(dto.getStudentId());
-        entity.setCourseId(dto.getCourseId());
+        entity.setCourse(course);
         entity.setEnrollmentDate(dto.getEnrollmentDate());
         return entity;
     }

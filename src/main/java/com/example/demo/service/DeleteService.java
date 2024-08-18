@@ -22,7 +22,7 @@ public class DeleteService {
     @Transactional
     public void deleteEnrollment(String studentId, String courseId) {
         try {
-            enrollmentRepository.deleteByStudentIdAndCourseId(studentId, courseId);
+            enrollmentRepository.deleteByStudentIdAndCourse_CourseId(studentId, courseId);
         } catch (DataAccessException e) {
             throw new RuntimeException(ErrorMessages.DRIVER_DELETE_ERROR, e);
         }
