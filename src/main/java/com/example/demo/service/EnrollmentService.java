@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.EnrollmentDto;
 import com.example.demo.model.Course;
 import com.example.demo.model.Enrollment;
-import com.example.demo.model.Timetable;
+import com.example.demo.model.Time;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.EnrollmentRepository;
 import com.example.demo.exception.InvalidEnrollmentException;
@@ -57,8 +57,8 @@ public class EnrollmentService {
     private boolean isDuplicateEnrollment(Course targetCourse,
             List<Course> enrolledCourses) {
         for (Course enrolledCourse : enrolledCourses) {
-            for (Timetable targetTimeTable : targetCourse.getTimeTables()) {
-                for (Timetable enrolledTimeTable : enrolledCourse.getTimeTables()) {
+            for (Time targetTimeTable : targetCourse.getTimes()) {
+                for (Time enrolledTimeTable : enrolledCourse.getTimes()) {
                     if (targetTimeTable.getDayOfWeek().equals(enrolledTimeTable.getDayOfWeek())
                             && targetTimeTable.getPeriod().equals(enrolledTimeTable.getPeriod())) {
                         return true;

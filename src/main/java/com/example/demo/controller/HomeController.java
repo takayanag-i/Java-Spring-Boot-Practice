@@ -20,26 +20,19 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(@SessionAttribute("loginStudent") StudentDto loginStudent, Model model) {
-        // セッション情報の取得
         String studentId = loginStudent.getStudentId();
-
-        // 表示用時間割データを取得
         List<List<CourseDto>> matrix = displayService.getCourseMatrix(studentId);
 
         model.addAttribute("matrix", matrix);
-        return "home"; // ビューは後で作成
+        return "home";
     }
 
     @PostMapping("/home")
     public String homePost(@SessionAttribute("loginStudent") StudentDto loginStudent, Model model) {
-        // GETメソッドと同じ処理を実行する
-        // セッション情報の取得
         String studentId = loginStudent.getStudentId();
-
-        // 表示用時間割データを取得
         List<List<CourseDto>> matrix = displayService.getCourseMatrix(studentId);
 
         model.addAttribute("matrix", matrix);
-        return "home"; // ビューは後で作成
+        return "home";
     }
 }

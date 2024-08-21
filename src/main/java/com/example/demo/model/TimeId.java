@@ -4,10 +4,10 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * ID class for the `timetable`.
+ * ID class for the `time`.
  */
 @Data
-public class TimetableId implements Serializable {
+public class TimeId implements Serializable {
 
     /** course ID */
     private Course course;

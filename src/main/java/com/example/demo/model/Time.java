@@ -9,14 +9,14 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 /**
- * Entity class for the `timetable`.
+ * Entity class for the `time`.
  */
 @Data
 @Entity
-@IdClass(TimetableId.class)
-public class Timetable {
+@IdClass(TimeId.class)
+public class Time {
 
-    /** the course associated with this timetable */
+    /** the course associated with this time */
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

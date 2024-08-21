@@ -4,10 +4,9 @@ import com.example.demo.dto.CourseDto;
 import com.example.demo.dto.SearchCriteriaDto;
 import com.example.demo.model.Course;
 import com.example.demo.model.Instruction;
-import com.example.demo.model.Timetable;
+import com.example.demo.model.Time;
 import com.example.demo.repository.InstructionRepository;
-import com.example.demo.repository.TimetableRepository;
-import com.example.demo.logic.MultipleInstructorsLogic;
+import com.example.demo.repository.TimeRepository;
 import com.example.demo.constants.ErrorMessages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -22,9 +21,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SearchService {
 
-    private final TimetableRepository timeTableRepository;
+    private final TimeRepository timeTableRepository;
     private final InstructionRepository instructionRepository;
-    private final MultipleInstructorsLogic multipleInstructorsLogic;
 
     @Transactional(readOnly = true)
     public List<CourseDto> getCourses(SearchCriteriaDto criteriaDto) {
@@ -32,7 +30,7 @@ public class SearchService {
 
         try {
             // 検索条件に基づく時間割エンティティの取得
-            List<Timetable> timeTableEntities = timeTableRepository.findByCriteria(
+            List<Time> timeTableEntities = timeTableRepository.findByCriteria(
                     "%" + criteriaDto.getCourseId() + "%",
                     "%" + criteriaDto.getCourseName() + "%",
                     "%" + criteriaDto.getDayOfWeek().getNum() + "%",
@@ -49,12 +47,12 @@ public class SearchService {
                     instructionRepository.findByCourseIn(courses);
 
             // 講座DTOの作成
-            for (Timetable timeTableEntity : timeTableEntities) {
-                CourseDto courseDto =
-                        multipleInstructorsLogic.merge(timeTableEntity, instructionEntities);
-                if (courseDto != null) {
-                    courseDtos.add(courseDto);
-                }
+            for (Time timeTableEntity : timeTableEntities) {
+                // CourseDto courseDto =
+                // multipleInstructorsLogic.merge(timeTableEntity, instructionEntities);
+                // if (courseDto != null) {
+                // courseDtos.add(courseDto);
+                // }
             }
 
         } catch (DataAccessException e) {

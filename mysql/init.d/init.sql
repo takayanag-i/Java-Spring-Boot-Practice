@@ -80,14 +80,14 @@ INSERT INTO course (course_id, course_name) VALUES
 ('1H050', '電磁気学');
 
 -- 時間割テーブルの作成
-CREATE TABLE timetable (
+CREATE TABLE time (
     course_id CHAR(5), 
     day_of_week CHAR(3),
     period CHAR(1),
     FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
-INSERT INTO timetable (course_id, day_of_week, period) VALUES
+INSERT INTO time (course_id, day_of_week, period) VALUES
 ('1H001', '1', '1'),
 ('1H002', '2', '2'),
 ('1H003', '3', '3'),

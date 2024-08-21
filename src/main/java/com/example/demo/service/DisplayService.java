@@ -2,8 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CourseDto;
 import com.example.demo.model.Course;
-import com.example.demo.model.Timetable;
-import com.example.demo.repository.TimetableRepository;
+import com.example.demo.model.Time;
+import com.example.demo.repository.TimeRepository;
 import com.example.demo.util.MatrixUtil;
 import com.example.demo.common.DayOfWeek;
 import com.example.demo.constants.ErrorMessages;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class DisplayService {
 
     /** repository */
-    private final TimetableRepository timeTableRepository;
+    private final TimeRepository timeRepository;
 
     /**
      * Generates a matrix representing the course schedule for a given student.
@@ -130,13 +130,13 @@ public class DisplayService {
         List<CourseDto> courseDtos = new ArrayList<>();
 
         try {
-            // Retrieve the timetable entries with the given student ID
-            List<Timetable> timetables =
-                    timeTableRepository.findByCourse_Enrollments_StudentId(studentId);
+            // Retrieve the time entries with the given student ID
+            List<Time> times =
+                    timeRepository.findByCourse_Enrollments_StudentId(studentId);
 
             // Build the CourseDto object
-            for (Timetable timetable : timetables) {
-                Course course = timetable.getCourse();
+            for (Time time : times) {
+                Course course = time.getCourse();
                 List<String> instructorNames = course.getInstructions().stream()
                         .map(instruction -> instruction.getInstructor().getName())
                         .collect(Collectors.toList());
@@ -144,8 +144,8 @@ public class DisplayService {
                 CourseDto courseDto = new CourseDto()
                         .setCourseId(course.getCourseId())
                         .setCourseName(course.getCourseName())
-                        .setDayOfWeek(DayOfWeek.fromNum(timetable.getDayOfWeek()))
-                        .setPeriod(timetable.getPeriod())
+                        .setDayOfWeek(DayOfWeek.fromNum(time.getDayOfWeek()))
+                        .setPeriod(time.getPeriod())
                         .setInstructorNames(instructorNames);
 
                 courseDtos.add(courseDto);
