@@ -17,24 +17,24 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Course {
 
-    /** course ID */
+    /** The ID of the course. */
     @Id
     @Column(length = 5)
     private String courseId;
 
-    /** course name */
+    /** The name of the course. */
     @Column(length = 63)
     private String courseName;
 
-    /** The list of enrollments associated with this course */
+    /** The list of enrollments associated with this course. */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Enrollment> enrollments;
 
-    /** the list of times associated with this course */
+    /** The list of times associated with this course. */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Time> times;
 
-    /** the list of instructions associated with this course */
+    /** The list of instructions associated with this course. */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Instruction> instructions;
 }

@@ -9,12 +9,7 @@ import lombok.Data;
 @Data
 public class TimeId implements Serializable {
 
-    /** course ID */
     private Course course;
-
-    /** day of week number (single-digit numeric string) */
     private String dayOfWeek;
-
-    /** period */
     private String period;
 }

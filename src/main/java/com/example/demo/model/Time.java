@@ -16,17 +16,17 @@ import lombok.Data;
 @IdClass(TimeId.class)
 public class Time {
 
-    /** the course associated with this time */
+    /** The course associated with this time. */
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    /** day of week number (single-digit numeric string) */
+    /** The day of the week represented as a single-digit numeric string. */
     @Id
     @Column(length = 1)
     private String dayOfWeek;
 
-    /** period */
+    /** The period. */
     @Id
     @Column(length = 1)
     private String period;

@@ -12,20 +12,20 @@ import lombok.Data;
 @Entity
 public class Student {
 
-    /** student ID */
+    /** The ID of the student. */
     @Id
     @Column(name = "student_id", length = 4)
     private String studentId;
 
-    /** name */
+    /** The name of the student. */
     @Column(name = "name", length = 31)
     private String name;
 
-    /** Email adress */
+    /** The email adress of the student. */
     @Column(name = "email", length = 63)
     private String email;
 
-    /** password */
+    /** The password of the student. */
     @Column(name = "password", length = 63)
     private String password;
 }

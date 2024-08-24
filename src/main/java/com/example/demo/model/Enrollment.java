@@ -17,22 +17,22 @@ import lombok.Data;
 @IdClass(EnrollmentId.class)
 public class Enrollment {
 
-    /** student ID */
+    /** The ID of the student. */
     @Id
     @Column(length = 4)
     private String studentId;
 
-    /** the course associated with this enrollment */
+    /** The course associated with this enrollment. */
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    /** enrollment date */
+    /** The date and time when the enrollment was made. */
     @Column
     private Timestamp enrollmentDate;
 
-    /** if the enrollment is canceled */
+    /** Indicates if the enrollment has been canceled. */
     @Column
     private boolean cancelFlag = false;
 }

@@ -15,24 +15,24 @@ import lombok.Data;
 @Entity
 public class Instructor {
 
-    /** instructor ID */
+    /** The ID of the instructor. */
     @Id
     @Column(name = "instructor_id", length = 5)
     private String instructorId;
 
-    /** name */
+    /** The name of the instructor. */
     @Column(name = "name", length = 31)
     private String name;
 
-    /** Email adress */
+    /** The email adress of the instructor. */
     @Column(name = "email", length = 63)
     private String email;
 
-    /** password */
+    /** The password of the instructor. */
     @Column(name = "password", length = 63)
     private String password;
 
-    /** the list of instructions associated with this instructor */
+    /** The list of instructions associated with this instructor. */
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
     private List<Instruction> instructions;
 }

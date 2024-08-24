@@ -9,9 +9,6 @@ import lombok.Data;
 @Data
 public class EnrollmentId implements Serializable {
 
-    /** student ID */
     private String studentId;
-
-    /** course */
     private Course course;
 }
