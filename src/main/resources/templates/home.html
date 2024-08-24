@@ -30,8 +30,7 @@
             <tbody>
                 <tr th:each="period : ${#numbers.sequence(1, 5)}">
                     <td th:text="${period}"></td>
-                    <td th:each="day : ${#numbers.sequence(1, 5)}" th:with="course=${matrix[period - 1][day - 1]}"
-                        th:rowspan="${course.rowspan}">
+                    <td th:each="course, courseStat : ${matrix[period - 1]}" th:rowspan="${course.rowspan}">
                         <form th:action="@{${course.formAction}}" method="post">
                             <input type="hidden" name="course_id" th:value="${course.courseId}">
                             <input type="hidden" name="day_of_week" th:value="${course.dayOfWeek.num}">
