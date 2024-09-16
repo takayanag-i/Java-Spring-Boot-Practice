@@ -1,22 +1,22 @@
 package com.example.demo.common;
 
 /**
- * Enum representing the days of the week.
+ * 曜日の列挙子
  */
 public enum DayOfWeek {
-    MON("1", "Mon"), TUE("2", "Tue"), WED("3", "Wed"), THU("4", "Thu"), FRI("5", "Fri"), UNSET("",
+    MON("1", "月"), TUE("2", "火"), WED("3", "水"), THU("4", "木"), FRI("5", "金"), UNSET("",
             "");
 
-    /** Numeric abbreviation */
+    /** 曜日番号 */
     private final String num;
-    /** Kanji representation */
+    /** 漢字 */
     private final String japanese;
 
     /**
-     * Constructor
+     * コンストラクタ
      * 
-     * @param num Numeric abbreviation
-     * @param japanese Kanji representation
+     * @param num 曜日番号
+     * @param japanese 漢字
      */
     private DayOfWeek(String num, String japanese) {
         this.num = num;
@@ -24,7 +24,7 @@ public enum DayOfWeek {
     }
 
     /*
-     * Getters
+     * ゲッタ
      */
     public String getNum() {
         return num;
@@ -35,19 +35,19 @@ public enum DayOfWeek {
     }
 
     /**
-     * Returns the numeric abbreviation as an integer.
+     * 曜日番号をint型で返却する
      * 
-     * @return Numeric abbreviation as an int
+     * @return int 曜日番号
      */
     public int getInt() {
         return Integer.parseInt(num);
     }
 
     /**
-     * Converts a string to the corresponding DayOfWeek instance.
+     * 曜日番号（String型）から曜日型に変換する
      * 
-     * @param str Numeric abbreviation as a string
-     * @return Corresponding DayOfWeek instance
+     * @param str String 曜日番号
+     * @return 曜日型のインスタンス
      */
     public static DayOfWeek fromNum(String str) {
         for (DayOfWeek day : DayOfWeek.values()) {
@@ -56,14 +56,14 @@ public enum DayOfWeek {
             }
         }
 
-        throw new IllegalArgumentException(str + " cannot be converted to DayOfWeek.");
+        throw new IllegalArgumentException(str + " は曜日型にできません。");
     }
 
     /**
-     * Converts an integer to the corresponding DayOfWeek instance.
+     * 曜日番号（int型）から曜日型に変換する
      * 
-     * @param num Numeric abbreviation as an int
-     * @return Corresponding DayOfWeek instance
+     * @param num int 曜日番号
+     * @return 曜日型のインスタンス
      */
     public static DayOfWeek fromNum(int num) {
         String str = String.valueOf(num);
@@ -74,14 +74,14 @@ public enum DayOfWeek {
             }
         }
 
-        throw new IllegalArgumentException(num + " cannot be converted to DayOfWeek.");
+        throw new IllegalArgumentException(num + " は曜日型にできません。");
     }
 
     /**
-     * Converts a Kanji string to the corresponding DayOfWeek instance.
+     * 漢字から曜日型に変換する
      * 
-     * @param japanese Kanji representation
-     * @return Corresponding DayOfWeek instance
+     * @param japanese 曜日の漢字
+     * @return 曜日型のインスタンス
      */
     public static DayOfWeek fromJapanese(String japanese) {
         for (DayOfWeek day : DayOfWeek.values()) {
@@ -89,6 +89,6 @@ public enum DayOfWeek {
                 return day;
             }
         }
-        throw new IllegalArgumentException(japanese + " cannot be converted to DayOfWeek.");
+        throw new IllegalArgumentException(japanese + " は曜日型にできません。");
     }
 }

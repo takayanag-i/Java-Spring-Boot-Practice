@@ -6,29 +6,29 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * Data Transfer Object for Course information.
+ * 講座情報の転送用オブジェクト
  */
 @Data
 @Accessors(chain = true)
 public class CourseDto {
-    /** The ID of the course. */
+    /** 講座ID */
     private String courseId;
 
-    /** The name of the course. */
+    /** 講座名 */
     private String courseName;
 
-    /** The day of the week. */
+    /** 曜日 */
     private DayOfWeek dayOfWeek;
 
-    /** The period. */
+    /** 時限 */
     private String period;
 
-    /** The list of instructor names for the course. */
+    /** 担当教員名のリスト */
     private List<String> instructorNames;
 
-    /** The action property value for form submission. */
+    /** fromのaction属性の値 */
     private String formAction;
 
-    /** The value of the rowspan property for table display. */
+    /** tableセルのrowspan属性の値 */
     private int rowspan = 1;
 }
