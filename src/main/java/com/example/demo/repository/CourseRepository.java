@@ -6,24 +6,24 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.example.demo.model.Course;
 
 /**
- * Repository interface for managing {@link Course} entities.
+ * 講座 {@link Course} エンティティに対するリポジトリ
  */
 public interface CourseRepository
         extends JpaRepository<Course, String>, JpaSpecificationExecutor<Course> {
 
     /**
-     * Finds a list of courses by the given course ID.
+     * 与えられた講座IDから講座を取得する
      *
-     * @param courseId the course ID to search for
-     * @return a list of courses with the specified course ID
+     * @param courseId 検索対象の講座ID
+     * @return 講座エンティティ
      */
-    List<Course> findByCourseId(String courseId);
+    List<Course> findByCourseId(String courseId); // TODO 1個だけでは？
 
     /**
-     * Finds a list of courses in which a student with the given student ID is enrolled.
+     * 与えられた出席番号の生徒が登録している講座のリストを取得する
      *
-     * @param studentId the student ID to search for
-     * @return a list of courses that the specified student is enrolled in
+     * @param studentId 検索対象の生徒の出席番号
+     * @return 生徒が登録している講座のリスト
      */
     List<Course> findByEnrollments_StudentId(String studentId);
 }

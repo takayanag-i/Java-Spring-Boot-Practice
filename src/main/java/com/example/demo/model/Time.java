@@ -9,24 +9,24 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 /**
- * Entity class for the `time`.
+ * コマエンティティクラス
  */
 @Data
 @Entity
 @IdClass(TimeId.class)
 public class Time {
 
-    /** The course associated with this time. */
+    /** 講座ID */
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    /** The day of the week represented as a single-digit numeric string. */
+    /** 曜日 */
     @Id
     @Column(length = 1)
     private String dayOfWeek;
 
-    /** The period. */
+    /** 時限 */
     @Id
     @Column(length = 1)
     private String period;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * ID class for the `time`.
+ * コマエンティティのIDクラス
  */
 @Data
 public class TimeId implements Serializable {

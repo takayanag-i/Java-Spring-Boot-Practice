@@ -10,31 +10,31 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * Entity class for the `course`.
+ * 講座エンティティクラス
  */
 @Data
 @Entity
 @Accessors(chain = true)
 public class Course {
 
-    /** The ID of the course. */
+    /** 講座ID */
     @Id
     @Column(length = 5)
     private String courseId;
 
-    /** The name of the course. */
+    /** 講座名 */
     @Column(length = 63)
     private String courseName;
 
-    /** The list of enrollments associated with this course. */
+    /** 講座に紐づけられた履修登録のリスト */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Enrollment> enrollments;
 
-    /** The list of times associated with this course. */
+    /** 講座に紐づけられたコマのリスト */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Time> times;
 
-    /** The list of instructions associated with this course. */
+    /** 講座に紐づけられた講座担当のリスト */
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Instruction> instructions;
 }

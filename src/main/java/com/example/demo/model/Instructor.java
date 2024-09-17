@@ -9,30 +9,30 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 /**
- * Entity class for the `instructor`.
+ * 教員エンティティクラス
  */
 @Data
 @Entity
 public class Instructor {
 
-    /** The ID of the instructor. */
+    /** 教員ID */
     @Id
     @Column(name = "instructor_id", length = 5)
     private String instructorId;
 
-    /** The name of the instructor. */
+    /** 名前 */
     @Column(name = "name", length = 31)
     private String name;
 
-    /** The email adress of the instructor. */
+    /** メールアドレス */
     @Column(name = "email", length = 63)
     private String email;
 
-    /** The password of the instructor. */
+    /** パスワード */
     @Column(name = "password", length = 63)
     private String password;
 
-    /** The list of instructions associated with this instructor. */
+    /** 教員に紐づけられた講座担当のリスト */
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
     private List<Instruction> instructions;
 }

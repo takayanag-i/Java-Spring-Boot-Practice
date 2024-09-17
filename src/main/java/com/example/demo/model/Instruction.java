@@ -8,20 +8,20 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 /**
- * Entity class for the `instruction`.
+ * 講座担当エンティティクラス
  */
 @Data
 @Entity
 @IdClass(InstructionId.class)
 public class Instruction {
 
-    /** The ID of the course. */
+    /** 講座ID */
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    /** The course associated with this enrollment. */
+    /** 教員ID */
     @Id
     @ManyToOne
     @JoinColumn(name = "instructor_id")

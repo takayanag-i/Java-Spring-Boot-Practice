@@ -17,28 +17,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 講座検索機能のサービスクラス
+ */
 @Service
 @RequiredArgsConstructor
 public class SearchService {
 
-    private final TimeRepository timeTableRepository;
+    /** コマリポジトリ */
+    private final TimeRepository timeRepository;
+
+    /** 講座担当リポジトリ */
     private final InstructionRepository instructionRepository;
 
     @Transactional(readOnly = true)
-    public List<CourseDto> getCourses(SearchCriteriaDto criteriaDto) {
-        List<CourseDto> courseDtos = new ArrayList<>();
+    public List<CourseDto> getCourses(SearchCriteriaDto criteria) {
 
         try {
-            // 検索条件に基づく時間割エンティティの取得
-            List<Time> timeTableEntities = timeTableRepository.findByCriteria(
-                    "%" + criteriaDto.getCourseId() + "%",
-                    "%" + criteriaDto.getCourseName() + "%",
-                    "%" + criteriaDto.getDayOfWeek().getNum() + "%",
-                    "%" + criteriaDto.getPeriod() + "%");
+            // 検索条件に基づきコマエンティティを取得する
+            List<Time> times = timeRepository.findByCriteria(
+                    "%" + criteria.getCourseId() + "%",
+                    "%" + criteria.getCourseName() + "%",
+                    "%" + criteria.getDayOfWeek().getNum() + "%",
+                    "%" + criteria.getPeriod() + "%");
 
             // 講座リストの作成
-            List<Course> courses = timeTableEntities.stream()
-                    .map(timeTableEntity -> timeTableEntity.getCourse())
+            List<Course> courses = times.stream()
+                    .map(time -> time.getCourse())
                     .distinct()
                     .collect(Collectors.toList());
 
@@ -47,18 +52,22 @@ public class SearchService {
                     instructionRepository.findByCourseIn(courses);
 
             // 講座DTOの作成
-            for (Time timeTableEntity : timeTableEntities) {
+
+            List<CourseDto> courseDtos = new ArrayList<>();
+
+            for (Time timeTableEntity : times) {
                 // CourseDto courseDto =
                 // multipleInstructorsLogic.merge(timeTableEntity, instructionEntities);
                 // if (courseDto != null) {
                 // courseDtos.add(courseDto);
                 // }
+
             }
+
+            return courseDtos;
 
         } catch (DataAccessException e) {
             throw new RuntimeException(ErrorMessages.DRIVER_SEARCH_ERROR, e);
         }
-
-        return courseDtos;
     }
 }

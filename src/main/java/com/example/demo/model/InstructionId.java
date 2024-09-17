@@ -4,7 +4,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * ID class for the `instruction`.
+ * 講座担当エンティティのIDクラス
  */
 @Data
 public class InstructionId implements Serializable {

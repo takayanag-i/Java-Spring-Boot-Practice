@@ -10,29 +10,29 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 /**
- * Entity class for the `enrollment`.
+ * 履修登録エンティティクラス
  */
 @Data
 @Entity
 @IdClass(EnrollmentId.class)
 public class Enrollment {
 
-    /** The ID of the student. */
+    /** 出席番号 */
     @Id
     @Column(length = 4)
-    private String studentId;
+    private String studentId; // TODO ManyToOne?
 
-    /** The course associated with this enrollment. */
+    /** 講座 */
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    /** The date and time when the enrollment was made. */
+    /** 登録日時 */
     @Column
     private Timestamp enrollmentDate;
 
-    /** Indicates if the enrollment has been canceled. */
+    /** 「履修取消」フラグ */
     @Column
     private boolean cancelFlag = false;
 }

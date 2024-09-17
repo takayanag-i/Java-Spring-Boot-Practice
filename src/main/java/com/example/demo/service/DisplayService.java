@@ -19,27 +19,30 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * 時間割表示機能のサービスクラス
+ */
 @Service
 @RequiredArgsConstructor
 public class DisplayService {
 
-    /** repository */
+    /** リポジトリ */
     private final TimeRepository timeRepository;
 
     /**
-     * Generates a matrix representing the course schedule for a given student.
+     * 与えられた生徒の時間割をマトリクス形式で取得する
      * 
-     * @param studentId the ID of the student whose course matrix is to be generated
-     * @return a matrix of {@link CourseDto} objects representing the student's course schedule
+     * @param studentId 対象生徒の出席番号
+     * @return 対象生徒の時間割を表す {@link CourseDto} の2x2マトリクス
      */
     public List<List<CourseDto>> getCourseMatrix(String studentId) {
-        // Initialize the course matrix with empty CourseDto objects
+        // 空のCourseDtoでマトリクスを初期化する
         List<List<CourseDto>> matrix = this.initialiseMatrix();
 
-        // Retrieve the list of courses for the student and convert them to CourseDto objects
+        // 対象生徒の時間割をまずCourseDtoのリスト形式で取得する
         List<CourseDto> courses = this.getCourseDtos(studentId);
 
-        // Populate the matrix with the CourseDto objects for each day and period
+        // 曜日・時限をみてマトリクスのCourseDtoを置き換える
         for (CourseDto course : courses) {
             course.setFormAction("PreDeleteServlet");
 
@@ -48,7 +51,7 @@ public class DisplayService {
             matrix.get(day - 1).set(period - 1, course);
         }
 
-        // Process the matrix to consolidate consecutive courses (merge cells)
+        // 連続時限開講の講座用にセルを結合する処理を行う
         for (int i = 0; i < matrix.size(); i++) {
             List<CourseDto> vector = matrix.get(i);
             List<CourseDto> newVector = this.consolidateConsecutiveCourses(vector);
@@ -56,14 +59,14 @@ public class DisplayService {
             matrix.set(i, newVector);
         }
 
-        // Transpose the matrix to switch rows and columns before returning
+        // 転置して返却
         return MatrixUtil.transpose(matrix);
     }
 
     /**
-     * Initialises a matrix of {@link CourseDto} objects with default values
+     * デフォルト値の入った {@link CourseDto} でマトリクスを初期化する
      * 
-     * @return initialised matrix
+     * @return 初期化されたマトリクス
      */
     private List<List<CourseDto>> initialiseMatrix() {
         List<List<CourseDto>> matrix = new ArrayList<>();
@@ -85,11 +88,10 @@ public class DisplayService {
     }
 
     /**
-     * Consolidates consecutive courses in the given list by combining them into a single
-     * {@link CourseDto} entry with an updated rowspan value.
+     * 連続時限で開講する講座をセル結合して表示するために，rowspan属性の値を更新する
      * 
-     * @param vector the list of {@link CourseDto} objects to consolidate
-     * @return a list of {@link CourseDto} objects with consolidated consecutive courses
+     * @param vector 結合操作対象の {@link CourseDto} ベクトル（曜日ごと）
+     * @return 結合処理された {@link CourseDto} ベクトル（曜日ごと）
      */
     private List<CourseDto> consolidateConsecutiveCourses(List<CourseDto> vector) {
         Map<String, CourseDto> map = new LinkedHashMap<>();
@@ -98,18 +100,18 @@ public class DisplayService {
             String courseId = dto.getCourseId();
 
             if (courseId.isEmpty()) {
-                // empty cells
+                // 空のセル
                 map.put(UUID.randomUUID().toString(), dto);
                 continue;
             }
 
             if (map.containsKey(courseId)) {
-                // consecutive courses
+                // 連続時限で開講されている場合の処理
                 CourseDto duplicateCourse = map.get(courseId);
                 duplicateCourse.setRowspan(duplicateCourse.getRowspan() + 1);
 
             } else {
-                // other => new entry
+                // それ以外 => 新たなエントリとして追加
                 map.put(courseId, dto);
 
             }
@@ -119,22 +121,22 @@ public class DisplayService {
     }
 
     /**
-     * Retrieves a list of {@link CourseDto} objects for a given student ID.
+     * 与えられた出席番号の生徒が登録している講座 {@link CourseDto} のリストをDBから取得する
      *
-     * @param studentId the ID of the student whose course details are to be retrieved
-     * @return a list of {@link CourseDto} objects containing the course details for the student
-     * @throws RuntimeException if there is an issue accessing the database
+     * @param studentId 対象生徒の出席番号
+     * @return 対象生徒が登録している講座 {@link CourseDto} のリスト
+     * @throws RuntimeException DB接続時の予期しないエラーは実行時例外として再スローする
      */
     @Transactional(readOnly = true)
     private List<CourseDto> getCourseDtos(String studentId) {
         List<CourseDto> courseDtos = new ArrayList<>();
 
         try {
-            // Retrieve the time entries with the given student ID
+            // 対象生徒の登録している講座をコマエンティティのリストとして取得
             List<Time> times =
                     timeRepository.findByCourse_Enrollments_StudentId(studentId);
 
-            // Build the CourseDto object
+            // コマからCourseDtoに変換する
             for (Time time : times) {
                 Course course = time.getCourse();
                 List<String> instructorNames = course.getInstructions().stream()
