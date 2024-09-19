@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>時間割アプリ-search-</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/search.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header th:replace="fragments/header :: header"></header>
+    <main>
+        <p class="error-message" th:text="${errorMessage}"></p>
+        <div class="container">
+            <div class="sub-container">
+                <h2>講座検索</h2>
+                <div class="form-container">
+                    <form action="SearchServlet" method="post">
+                        <div class="form-row">
+                            <div class="col">
+                                <select id="day_of_week" name="day_of_week">
+                                    <option value="" th:selected="${criteria.dayOfWeek == ''}">曜日</option>
+                                    <option value="1" th:selected="${criteria.dayOfWeek == '1'}">月</option>
+                                    <option value="2" th:selected="${criteria.dayOfWeek == '2'}">火</option>
+                                    <option value="3" th:selected="${criteria.dayOfWeek == '3'}">水</option>
+                                    <option value="4" th:selected="${criteria.dayOfWeek == '4'}">木</option>
+                                    <option value="5" th:selected="${criteria.dayOfWeek == '5'}">金</option>
+
+                                </select>
+                            </div>
+                            <div class="col">
+                                <input type="text" id="period" name="period" placeholder="時限"
+                                    value="${criteria.period}">
+                            </div>
+                            <div class="col">
+                                <input type="text" id="course_id" name="course_id" placeholder="講座コード"
+                                    value="${criteria.courseId}">
+                            </div>
+                            <div class="col">
+                                <input type="text" id="course_name" name="course_name" placeholder="講座名"
+                                    value="${criteria.courseName}">
+                            </div>
+                            <div class="col">
+                                <input type="text" id="instructor_name" name="instructor_name" placeholder="担当教員名"
+                                    value="${criteria.instructorName}">
+                            </div>
+                            <div class="col-full">
+                                <button type="submit" class="btn">
+                                    <i class="fas fa-search"></i>検索
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <form action="EnrollmentServlet" method="post" th:if="${results != null and !results.isEmpty()}">
+                    <div class=" results-sub-container">
+                        <p>結果が多いときは表をスクロールできます。1つ選択して登録してください。</p>
+                        <button type="submit" class="btn"><i class="fas fa-check"></i>登録</button>
+                    </div>
+                    <div class="table-container scrollable-container">
+                        <table>
+                            <tr>
+                                <th>曜日</th>
+                                <th>時限</th>
+                                <th>講座コード</th>
+                                <th>講座名</th>
+                                <th>担当教員</th>
+                                <th></th>
+                            </tr>
+                            <c:forEach var="course" items="${results}">
+                                <tr>
+                                    <td th:text="${course.dayOfWeek.japanese}"></td>
+                                    <td th:text="${course.period}"></td>
+                                    <td th:text="${course.courseId}"></td>
+                                    <td th:text="${course.courseName}"></td>
+                                    <td th:each="instructor : ${course.instructors}">
+                                        <span>
+                                            <span th:text="${instructor}"></span><br>
+                                        </span>
+                                    </td>
+                                    <td><input type="radio" name="selectedCourse" value="${course.courseId}">
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </form>
+                <p th:if="${results == null or results.isEmpty()}">結果はありません。</p>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

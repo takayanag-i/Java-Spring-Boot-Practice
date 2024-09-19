@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CourseDto;
 import com.example.demo.dto.SearchCriteriaDto;
+import com.example.demo.logic.MultipleInstructorsLogic;
 import com.example.demo.model.Course;
 import com.example.demo.model.Instruction;
 import com.example.demo.model.Time;
@@ -30,6 +31,9 @@ public class SearchService {
     /** 講座担当リポジトリ */
     private final InstructionRepository instructionRepository;
 
+    /** 複数教員対応ロジック */
+    private final MultipleInstructorsLogic multipleInstructorsLogic;
+
     @Transactional(readOnly = true)
     public List<CourseDto> getCourses(SearchCriteriaDto criteria) {
 
@@ -38,7 +42,7 @@ public class SearchService {
             List<Time> times = timeRepository.findByCriteria(
                     "%" + criteria.getCourseId() + "%",
                     "%" + criteria.getCourseName() + "%",
-                    "%" + criteria.getDayOfWeek().getNum() + "%",
+                    "%" + criteria.getDayOfWeek() + "%",
                     "%" + criteria.getPeriod() + "%");
 
             // 講座リストの作成
@@ -48,20 +52,19 @@ public class SearchService {
                     .collect(Collectors.toList());
 
             // 講座・教員対応エンティティの取得
-            List<Instruction> instructionEntities =
+            List<Instruction> instructions =
                     instructionRepository.findByCourseIn(courses);
 
             // 講座DTOの作成
-
             List<CourseDto> courseDtos = new ArrayList<>();
 
-            for (Time timeTableEntity : times) {
-                // CourseDto courseDto =
-                // multipleInstructorsLogic.merge(timeTableEntity, instructionEntities);
-                // if (courseDto != null) {
-                // courseDtos.add(courseDto);
-                // }
+            for (Time time : times) {
 
+                CourseDto courseDto =
+                        multipleInstructorsLogic.merge(time, instructions);
+                if (courseDto != null) {
+                    courseDtos.add(courseDto);
+                }
             }
 
             return courseDtos;

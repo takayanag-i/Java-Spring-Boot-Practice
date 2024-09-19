@@ -15,13 +15,13 @@ import lombok.Data;
 @IdClass(InstructionId.class)
 public class Instruction {
 
-    /** 講座ID */
+    /** 講座 */
     @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
-    /** 教員ID */
+    /** 教員 */
     @Id
     @ManyToOne
     @JoinColumn(name = "instructor_id")
